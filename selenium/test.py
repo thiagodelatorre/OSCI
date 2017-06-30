@@ -1,10 +1,13 @@
-from pyvirtualdisplay import Display
 from selenium import webdriver
 
-display = Display(visible=0, size=(800, 600))
-display.start()
-driver = webdriver.Chrome()
+options = webdriver.ChromeOptions()
+
+options.add_argument('headless')
+
+options.add_argument('window-size=1200x600')
+
+driver = webdriver.Chrome(chrome_options=options)
+
 driver.get('http://christopher.su')
 print driver.title
-
-
+driver.get_screenshot_as_file('main-page.png')
