@@ -1,0 +1,16 @@
+server {
+    listen  :80;
+    server_name  localhost;
+    resolver 10.25.59.110;
+    auth_basic "Restricted";
+    auth_basic_user_file /etc/nginx/passwd;
+
+    location ~ (/.*) {
+        fastcgi_pass  unix:/var/run/fcgiwrap.socket;
+        fastcgi_param SCRIPT_FILENAME /usr/lib/git-core/git-http-backend;
+        fastcgi_param GIT_HTTP_EXPORT_ALL "";
+        fastcgi_param GIT_PROJECT_ROOT    /srv/git;
+        fastcgi_param PATH_INFO           $1;
+        include       fastcgi_params;
+    }
+}
